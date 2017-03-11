@@ -2,15 +2,24 @@ close all; clear all; clc;
 
 im = im2double(imread('images/mapleleaf.tif'));
 im_out = im;
-intermediate = im;
-figure, imshow(im);  
+
+figure, imshow(im_out);
+hold on;
+
 [rows, cols] = size(im);
      flags = zeros(rows, cols);
+     
+intermediate = zeros(rows, cols);
+p = zeros(8);
+t = zeros(8);
+c = 0;
+d = 0;
+num_iterations = 0;
 
-iterations = 50;
-while iterations;
-    iterations
-    
+% Limit iteration count to avoid infinite loop
+max_iterations = 5;
+while 1;
+    %Update the intermediate buffer with the latest changes to im_out
     intermediate = im_out;
     
     for stage = 0 : 1;
@@ -53,7 +62,7 @@ while iterations;
 
 
                 if((2 <= sum_p) && (sum_p <= 6) && (t == 1) && (c == 0) && (d == 0));
-                    %flag for deletion
+                    %Delete pixel
                     im_out(x, y) = 0;
 
                 end
@@ -61,9 +70,22 @@ while iterations;
             end
         end
     end  
-	iterations = iterations - 1;
+
+    % Update the image displayed in the figure (live update)
+    imshow(im_out);
+    drawnow;
+    
+    % Ensures max iteration count it not exceeded
+	num_iterations = num_iterations + 1;
+    if(num_iterations >= max_iterations)
+        break;
+    end
+    
+    % Exit when skeltonising is complete
+    if(im_out == intermediate)
+        break;
+    end
 end
-%print image
-figure, imshow(im_out);  
-             
+
+num_iterations
         
