@@ -10,9 +10,9 @@ function [original, skeleton, num_iterations, time] = skeletonise(filename);
     clc;
 
     original = im2double(imread(filename));
-    size(original)
     imshow(original);
-    %Convert image to black and white (input validation)
+    
+    % Convert image to black and white (input validation)
     original = im2bw(original, 1.7*graythresh(original));
 
     [rows, cols] = size(original);
@@ -37,17 +37,16 @@ function [original, skeleton, num_iterations, time] = skeletonise(filename);
     num_iterations = 0;
     
     while 1;
-        %Update the intermediate buffer with the latest changes to skeleton
-        intermediate = skeleton;
-
-        % We only need to apply this algorithm to the border points (a black
-        % pixel with al least on white neighbour pixel)
-        border = bwperim(intermediate);
-
-
         % Two passes of the below algorithm are applied, each with different c
         % and d values.
         for stage = 0 : 1;
+            % Update the intermediate buffer with the latest changes to skeleton
+            intermediate = skeleton;
+
+            % We only need to apply this algorithm to the border points (a black
+            % pixel with al least on white neighbour pixel)
+            border = bwperim(intermediate);
+
             for x = 2 : rows - 1;
                 for y = 2 : cols - 1; % for each inner pixel
                     % Optimisation: Only check border pixels
