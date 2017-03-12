@@ -10,6 +10,10 @@ function [original, skeleton, num_iterations, time] = skeletonise(filename);
     clc;
 
     original = im2double(imread(filename));
+    size(original)
+    imshow(original);
+    %Convert image to black and white (input validation)
+    original = im2bw(original, 1.7*graythresh(original));
 
     [rows, cols] = size(original);
     
@@ -19,7 +23,7 @@ function [original, skeleton, num_iterations, time] = skeletonise(filename);
     border = zeros(rows, cols);
     sum_p = 0;
     p = zeros(8);
-    t = zeros(8);
+    t = 0;
     c = 0;
     d = 0;
     
@@ -50,13 +54,13 @@ function [original, skeleton, num_iterations, time] = skeletonise(filename);
                     if(border(x, y) == 1);
                         % Calculate neighbours
                         p = [
-                            intermediate(x, y-1),...
+                            intermediate(x,   y-1),...
                             intermediate(x+1, y-1),...
-                            intermediate(x+1, y),...
+                            intermediate(x+1, y)  ,...
                             intermediate(x+1, y+1),...
-                            intermediate(x, y+1),...
+                            intermediate(x,   y+1),...
                             intermediate(x-1, y+1),...
-                            intermediate(x-1, y),...
+                            intermediate(x-1, y)  ,...
                             intermediate(x-1, y-1)
                         ];
 
@@ -71,7 +75,7 @@ function [original, skeleton, num_iterations, time] = skeletonise(filename);
                             abs(p(7) - p(6)) + ...
                             abs(p(8) - p(7)) + ...
                             abs(p(1) - p(8)) + ...
-                            abs(p(2) - p(1)) ...
+                            abs(p(2) - p(1))   ...
                         )/2;
 
 
@@ -109,9 +113,6 @@ function [original, skeleton, num_iterations, time] = skeletonise(filename);
         if(skeleton == intermediate)
             break;
         end
-        
-        %Print number of iterations
-        num_iterations
     end
     time = toc;
 end
