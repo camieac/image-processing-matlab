@@ -1,0 +1,28 @@
+image = images/noisy_stroke.tif
+iterations = 16
+time = 2.6129 s
+
+image = images/human.tif
+iterations = 15
+time = 1.6873 s
+
+image = images/mapleleaf.tif
+iterations = 112
+time = 13.9342 s
+
+image = images/square.tif
+iterations = 313
+time = 50.0025 s
+
+
+image = images/triangle.tif
+iterations = 205
+time = 33.5816 s
+
+image = images/bone.tif
+iterations = 48
+time = 6.3872 s
+
+image = images/noisy_stroke.tif
+iterations = 16
+time = 2.5306 s

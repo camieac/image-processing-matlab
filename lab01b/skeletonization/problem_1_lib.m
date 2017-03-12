@@ -1,24 +1,22 @@
 % File: problem_1.m
-% Description: Fourier Descriptor Scheme
+% Description: Uses built-in fucntion to visually verify our algorithm.
 % Authors: Cameron a. Craig & Stuart J.Thain
-% Date: 11 March 2017
+% Date: 12 March 2017
 
 images = { ...
     'images/human.tif', ...
     'images/mapleleaf.tif', ...
     'images/lincoln_from_penny.tif', ...
     'images/square.tif', ...
-    'images/triangle.tif', ...
-    'images/bone.tif', ...
-    'images/noisy_stroke.tif' ...
+    'images/triangle.tif' ...
 };
 
 for idx = 1:numel(images)
     image = char(images(idx));
     
     % Calculate the skeleton image of originsl
-    [original, skeleton, iterations, time] = skeletonise(image);
-    % close all;
+    original = im2double(imread(image));
+    skeleton = bwmorph(original,'skel',Inf);
 
     % Draw the original and skeleton images
     figure('Name', image)
@@ -32,8 +30,6 @@ for idx = 1:numel(images)
     
 
     image
-    iterations
-    time
     pause;
 end
 
